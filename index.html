@@ -2,119 +2,321 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>PayPal</title>
+<title>BCP – Cuenta de préstamo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-/* ---------- BASE ---------- */
-body {
+*{box-sizing:border-box;}
+body{
+  margin:0;
   background:#f5f6f8;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  margin:0;
   color:#1f2933;
 }
 
-/* ---------- HEADER ---------- */
-header {
-  background:#004a9f;
-  color:white;
+/* HEADER FIJO (común a todas las páginas) */
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0046ad;
+  color:#fff;
   padding:12px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo-img{
+  height:26px;
+  width:auto;
+  border-radius:6px;
+}
+
+/* NAV BOTONES */
+nav{
+  display:flex;
+  gap:10px;
+}
+nav a{
+  color:#e5efff;
+  text-decoration:none;
+  font-size:14px;
+  padding:6px 14px;
+  border-radius:999px;
+  border:1px solid transparent;
+  transition:background .15s,border-color .15s,color .15s;
+}
+nav a:hover{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.3);
+}
+nav a.active{
+  background:#fff;
+  color:#0046ad;
+  border-color:#fff;
+}
+.user-circle{
+  width:30px;height:30px;
+  border-radius:50%;
+  background:#00327a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* MAIN */
+main{padding:24px 32px 40px;}
+.breadcrumbs{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:18px;
+}
+.breadcrumbs span{color:#1f2933;}
+
+.layout{
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:24px;
+  align-items:flex-start;
+}
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  border:1px solid #e5e7eb;
+}
+
+/* LEFT COLUMN */
+.section-title{
+  font-size:13px;
+  font-weight:600;
+  color:#4b5563;
+  margin-bottom:14px;
+}
+.account-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:4px;
+}
+.account-sub{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:12px;
+}
+.account-sub span{display:block;}
+.balance-box{
+  background:#f9fafb;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  padding:14px 16px;
+  margin-bottom:20px;
+}
+.balance-label{
+  font-size:11px;
+  text-transform:uppercase;
+  color:#9ca3af;
+  margin-bottom:4px;
+}
+.balance-amount{
+  font-size:22px;
+  font-weight:700;
+  color:#0046ad;
+}
+
+/* ACCIONES (solo pago de préstamo) */
+.actions{
+  margin-top:12px;
+  border-top:1px solid #e5e7eb;
+}
+.action-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  font-size:14px;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+}
+.action-row:hover{
+  background:#f3f4ff;
+}
+.action-icon{
+  width:24px;height:24px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+}
+.action-pay{background:#ffb100;}
+
+/* RIGHT COLUMN */
+.mov-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  flex-wrap:wrap;
-  gap:12px;
+  margin-bottom:12px;
+}
+.mov-header h3{
+  margin:0;
+  font-size:18px;
+}
+.export-link{
+  font-size:13px;
+  color:#f97316;
+  cursor:pointer;
+}
+.search-bar{
+  margin-bottom:10px;
+}
+.search-bar input{
+  width:100%;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  padding:8px 10px;
+  font-size:13px;
 }
 
-header strong {
+/* MOVEMENTS LIST */
+.movements{
+  max-height:550px;
+  overflow-y:auto;
+  padding-right:4px;
+}
+.month-label{
+  font-size:13px;
+  font-weight:600;
+  color:#6b7280;
+  margin:16px 0 6px;
+}
+.movement{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 4px;
+  border-radius:8px;
+  font-size:14px;
+}
+.movement:hover{
+  background:#f3f4ff;
+}
+.m-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+.m-icon{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:#e5edff;
+  color:#0046ad;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  flex-shrink:0;
+}
+.m-info{min-width:0;}
+.m-title{
+  font-weight:500;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+.m-meta{
+  font-size:12px;
+  color:#6b7280;
+}
+.m-amount{
+  font-weight:600;
+  white-space:nowrap;
+}
+.payment-positive{
+  /* pago “positivo” para el préstamo (reduce deuda) */
+  color:#047857;
+}
+
+/* SKELETON LOADING */
+.skeleton-list{
+  padding-top:4px;
+}
+.skeleton-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 4px;
+}
+.skeleton-left{
   display:flex;
   align-items:center;
   gap:8px;
 }
-
-nav {
+.skeleton-avatar{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+}
+.skeleton-text{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+  flex-direction:column;
+  gap:4px;
+}
+.skeleton-line{
+  width:120px;
+  height:9px;
+  border-radius:4px;
+}
+.skeleton-line-sm{
+  width:80px;
+}
+.skeleton-amount{
+  width:70px;
+  height:10px;
+  border-radius:4px;
+}
+.skeleton{
+  position:relative;
+  overflow:hidden;
+  background:#e5e7eb;
+}
+.skeleton::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);
+  animation:shimmer 1.1s infinite;
+}
+@keyframes shimmer{
+  100%{transform:translateX(100%);}
 }
 
-nav a {
-  color:#e5efff;
-  margin:6px 12px;
-  text-decoration:none;
-  border-bottom:2px solid transparent;
-  padding-bottom:4px;
-}
-nav a.active { border-bottom-color:white; }
-
-/* ---------- MAIN ---------- */
-main { padding:24px 32px; }
-
-.layout {
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:24px;
-}
-
-.card {
-  background:white;
-  border-radius:12px;
-  padding:20px;
-  border:1px solid #e5e7eb;
-  margin-bottom:18px;
-}
-
-/* ---------- MOVEMENTS ---------- */
-.movements {
-  margin-top:12px;
-  max-height:550px;
-  overflow-y:auto;
-}
-
-.movement-item {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:10px 0;
-  border-bottom:1px solid #e5e7eb;
-  font-size:14px;
-}
-.movement-meta {
-  font-size:12px;
-  color:#6b7280;
-}
-.positive { color:#047857; font-weight:600; }
-.negative { color:#b91c1c; font-weight:600; }
-.pending { color:#1d4ed8; font-weight:600; }
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 900px) {
-  header {
-    flex-direction:column;
-    align-items:flex-start;
-    padding:12px 16px;
+/* RESPONSIVE */
+@media (max-width:900px){
+  header{
+    padding:10px 16px;
+    flex-wrap:wrap;
+    row-gap:8px;
   }
-
-  nav {
-    justify-content:flex-start;
+  nav{
+    order:3;
+    width:100%;
+    justify-content:center;
+    flex-wrap:wrap;
   }
-
-  main {
-    padding:16px;
-  }
-
-  .layout {
-    grid-template-columns:1fr;
-  }
-
-  .movement-item {
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .movement-item span {
-    align-self:flex-end;
-  }
+  main{padding:16px;}
+  .layout{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -122,144 +324,181 @@ main { padding:24px 32px; }
 <body>
 
 <header>
-  <strong>
-    <img src="icon01.png" alt="DC PayPal" height="22">
-    DC PayPal
-  </strong>
+  <div class="header-left">
+    <img src="icon001.png" alt="BCP" class="logo-img">
+  </div>
 
   <nav>
     <a href="index.html" class="active">Inicio</a>
-    <a href="enviar.html">Enviar</a>
-    <a href="movimientos.html">Movimientos</a>
-    <a href="ayuda.html">Ayuda</a>
+    <a href="operaciones.html">Operaciones</a>
+    <a href="explora.html">Explora</a>
   </nav>
 
-  <span>Diego Pedro Cueva Rovelo</span>
+  <div style="display:flex;align-items:center;gap:10px;font-size:14px;">
+    <span>Diego Cueva</span>
+    <div class="user-circle">D</div>
+  </div>
 </header>
 
 <main>
-<div class="layout">
-
-<section>
-  <div class="card">
-    <h3>Saldo en PayPal</h3>
-    <h1>PEN 33.55</h1>
+  <div class="breadcrumbs">
+    Inicio &gt; Mis productos &gt; <span>Cuentas</span>
   </div>
 
-  <div class="card">
-    <h3>Movimientos recientes</h3>
-    <div class="movements" id="movements"></div>
-  </div>
-</section>
+  <div class="layout">
+    <!-- IZQUIERDA -->
+    <section class="card">
+      <div class="section-title">Cuentas</div>
 
-<section>
-  <div class="card">
-    <h4>Buscar movimiento</h4>
-    <input id="searchInput" placeholder="Buscar por nombre…" />
-
-    <!-- RETIRAR -->
-    <div style="margin-top:18px;font-size:14px;">
-      <div style="margin-bottom:6px;font-weight:600;">Retirar:</div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="icon02.png" alt="BCP" height="20">
-        <span>Cuenta Ahorros BCP **** **** **** **** 6443</span>
+      <div class="account-title">CUENTA DE PRÉSTAMO</div>
+      <div class="account-sub">
+        <span>19139907763069</span>
+        <span>CCI: 0021913990776306952</span>
       </div>
-    </div>
-  </div>
-</section>
 
-</div>
+      <div class="balance-box">
+        <div class="balance-label">Monto por pagar</div>
+        <div class="balance-amount">S/ 43,071.00</div>
+      </div>
+
+      <div class="actions">
+        <!-- ÚNICO BOTÓN PARA PAGAR PRÉSTAMO -->
+        <a href="pagar.html" class="action-row">
+          <div class="action-icon action-pay">●</div>
+          <span>Pagar</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- DERECHA -->
+    <section class="card">
+      <div class="mov-header">
+        <h3>Movimientos</h3>
+        <div class="export-link">Exportar movimientos</div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar movimiento">
+      </div>
+
+      <div class="movements" id="movements"></div>
+    </section>
+  </div>
 </main>
 
 <script>
 const movementsEl = document.getElementById("movements");
 
-function formatDate(d){
-  const months=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
-  return `${String(d.getDate()).padStart(2,"0")} ${months[d.getMonth()]}`;
+const monthNames = [
+  "enero","febrero","marzo","abril","mayo","junio",
+  "julio","agosto","septiembre","octubre","noviembre","diciembre"
+];
+const monthShort = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+function dayLabel(d){
+  return String(d.getDate()).padStart(2,"0") + " " + monthShort[d.getMonth()];
 }
 
-function addMovement(title, meta, amount, type){
+/* CABECERA POR MES */
+function ensureMonthHeader(date){
+  const key = date.getFullYear() + "-" + date.getMonth();
+  if(ensureMonthHeader.current === key) return;
+  ensureMonthHeader.current = key;
+
+  const name = monthNames[date.getMonth()];
+  const label = name.charAt(0).toUpperCase() + name.slice(1) +
+                " " + date.getFullYear();
+
   const div = document.createElement("div");
-  div.className = "movement-item";
-  div.innerHTML = `
-    <div>
-      <strong>${title}</strong>
-      <div class="movement-meta">${meta}</div>
-    </div>
-    <span class="${type}">${amount}</span>
-  `;
+  div.className = "month-label";
+  div.textContent = label;
   movementsEl.appendChild(div);
 }
+ensureMonthHeader.current = null;
 
-const start = new Date(2024,9,10); // 10 oct
-const end   = new Date(2024,11,4); // 04 dic
+/* FILA REAL DE MOVIMIENTO (solo pagos “positivos” para el préstamo) */
+function addMovement(title, meta, amount){
+  const row = document.createElement("div");
+  row.className = "movement";
 
-for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
-  const label = formatDate(d);
+  row.innerHTML = `
+    <div class="m-left">
+      <div class="m-icon">${title[0]}</div>
+      <div class="m-info">
+        <div class="m-title">${title}</div>
+        <div class="m-meta">${meta}</div>
+      </div>
+    </div>
+    <div class="m-amount payment-positive">${amount}</div>
+  `;
+  movementsEl.appendChild(row);
+}
 
-  // Binance gasto diario -500 PEN
-  addMovement("Binance Cripto",`${label} · Pago completado`,"-500 PEN","negative");
+/* SKELETON */
+function renderSkeleton(){
+  movementsEl.innerHTML = "";
+  const list = document.createElement("div");
+  list.className = "skeleton-list";
 
-  // Intereses Binance
-  if(d.getDate()===31 && d.getMonth()===9){
-    addMovement("Binance Cripto","31 oct · Intereses Binance","-2,700 PEN","negative");
+  for(let i=0;i<8;i++){
+    const row = document.createElement("div");
+    row.className = "skeleton-row";
+    row.innerHTML = `
+      <div class="skeleton-left">
+        <div class="skeleton-avatar skeleton"></div>
+        <div class="skeleton-text">
+          <div class="skeleton-line skeleton"></div>
+          <div class="skeleton-line skeleton skeleton-line-sm"></div>
+        </div>
+      </div>
+      <div class="skeleton-amount skeleton"></div>
+    `;
+    list.appendChild(row);
   }
-  if(d.getDate()===30 && d.getMonth()===10){
-    addMovement("Binance Cripto","30 nov · Intereses Binance","-2,700 PEN","negative");
-  }
+  movementsEl.appendChild(list);
+}
 
-  // Intigriti depósitos
-  if(d > start){
-    const nov11 = new Date(2024,10,11);
-    const amount = d < nov11
-      ? Math.floor(120 + Math.random()*61)
-      : Math.floor(298 + Math.random()*118);
+/* GENERAR MOVIMIENTOS REALES */
+function generateMovements(){
+  movementsEl.innerHTML = "";
+  ensureMonthHeader.current = null;
 
-    addMovement("Intigriti Cibersecurity",`${label} · Depósito`,`+${amount} PEN`,"positive");
-  }
+  /*
+    RANGO: 10 oct 2025 – 04 dic 2025
+  */
 
-  // TD SYNNEX
-  if(d.getDate()===15 && d.getMonth()===9){
-    addMovement("TD SYNNEX Symantec","15 oct · Depósito extraordinario","+5,800 PEN","positive");
-  }
-  if(d.getDate()===15 && d.getMonth()===10){
-    addMovement("TD SYNNEX Symantec","15 nov · Depósito extraordinario","+5,800 PEN","positive");
-  }
+  const start = new Date(2025, 9, 10);  // 10 oct
+  const end   = new Date(2025,11, 4);   // 04 dic
 
-  // Amortización BCP 10 nov
-  if(d.getDate()===10 && d.getMonth()===10){
-    addMovement("BCP","10 nov · Amortización","-46,800 PEN","negative");
-  }
+  for(let d = new Date(end); d >= start; d.setDate(d.getDate() - 1)){
+    ensureMonthHeader(d);
+    const label = dayLabel(d);
 
-  // Paquete 03 dic
-  if(d.getDate()===3 && d.getMonth()===11){
-    addMovement("Intigriti Cibersecurity","03 dic · Depósito","+4,370 PEN","positive");
-    addMovement("BCP","03 dic · Amortización","-4,370 PEN","negative");
-    addMovement("Binance Cripto","03 dic · Pendiente de liberación","+346 PEN","pending");
-  }
+    // Pagos diarios de Binance
+    addMovement("Binance Cripto", `${label} · Pago completado`, "S/ -500");
 
-  // Depósito inicial Binance 10 oct
-  if(d.getTime()===start.getTime()){
-    addMovement("Binance Cripto","10 oct · Depósito","+129,114 PEN","positive");
+    // Intereses Binance
+    if (d.getDate() === 31 && d.getMonth() === 9) {
+      addMovement("Binance Cripto", "31 oct · Intereses Binance", "S/ -2,700");
+    }
+    if (d.getDate() === 30 && d.getMonth() === 10) {
+      addMovement("Binance Cripto", "30 nov · Intereses Binance", "S/ -2,700");
+    }
+
+    // Amortizaciones BCP
+    if (d.getDate() === 10 && d.getMonth() === 10) {
+      addMovement("BCP", "10 nov · Amortización", "S/ -46,800");
+    }
+    if (d.getDate() === 3 && d.getMonth() === 11) {
+      addMovement("BCP", "03 dic · Amortización", "S/ -4,370");
+    }
   }
 }
 
-// ---- Movimientos anteriores al 10 oct ----
-addMovement("PortSwigger Ltd","01 oct · Pago completado","-1,700 PEN","negative");
-addMovement("HackerOne","01 oct · Depósito","+4,200 PEN","positive");
-addMovement("OSCP Security","15 sep · Pago completado","-8,200 PEN","negative");
-
-const searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", () => {
-  const term = searchInput.value.toLowerCase().trim();
-  document.querySelectorAll(".movement-item").forEach(item => {
-    const title = item.querySelector("strong").textContent.toLowerCase();
-    item.style.display = !term || title.includes(term) ? "flex" : "none";
-  });
-});
+/* INICIO: primero skeleton, luego datos reales */
+renderSkeleton();
+setTimeout(generateMovements, 900);
 </script>
 
 </body>
 </html>
-
