@@ -1,1 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DC PayPal – Enviar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  background:#f5f6f8;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  margin:0;
+  color:#1f2933;
+}
+header {
+  background:#004a9f;
+  color:white;
+  padding:12px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav a {
+  color:#e5efff;
+  margin:0 12px;
+  text-decoration:none;
+  border-bottom:2px solid transparent;
+  padding-bottom:4px;
+}
+nav a.active { border-bottom-color:white; }
+main { padding:24px 32px; }
+.layout {
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+}
+.card {
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  border:1px solid #e5e7eb;
+  margin-bottom:18px;
+}
+label {
+  display:block;
+  font-size:14px;
+  margin-bottom:4px;
+  color:#4b5563;
+}
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width:100%;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  font-size:14px;
+  box-sizing:border-box;
+}
+textarea {
+  min-height:70px;
+  resize:vertical;
+}
+.form-row {
+  margin-bottom:12px;
+}
+button {
+  background:#004a9f;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  font-size:14px;
+  cursor:pointer;
+}
+button:disabled {
+  opacity:0.6;
+  cursor:not-allowed;
+}
+.small {
+  font-size:12px;
+  color:#6b7280;
+}
+.preview {
+  border-top:1px dashed #e5e7eb;
+  margin-top:16px;
+  padding-top:12px;
+  font-size:14px;
+}
+.preview strong {
+  display:block;
+  margin-bottom:6px;
+}
+.badge {
+  display:inline-block;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#e5f3ff;
+  color:#004a9f;
+  margin-left:6px;
+}
+ul {
+  padding-left:18px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>DC PayPal</strong>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="enviar.html" class="active">Enviar</a>
+    <a href="movimientos.html">Movimientos</a>
+    <a href="ayuda.html">Ayuda</a>
+  </nav>
+  <span>Diego Pedro Cueva Rovelo</span>
+</header>
+
+<main>
+<div class="layout">
+
+<section>
+  <div class="card">
+    <h3>Enviar dinero</h3>
+    <p class="small">
+      Esta es una simulación sobre tu panel DC PayPal. Ningún pago se envía realmente.
+    </p>
+
+    <div class="form-row">
+      <label>Enviar desde</label>
+      <input type="text" value="Saldo en PayPal · PEN 33.55" disabled>
+    </div>
+
+    <div class="form-row">
+      <label>Nombre o correo del destinatario</label>
+      <input type="text" id="destinatario" placeholder="Ej: Binance Cripto, Intigriti Cibersecurity…">
+    </div>
+
+    <div class="form-row">
+      <label>Monto</label>
+      <input type="number" id="monto" min="0" step="0.01" placeholder="Ej: 500">
+    </div>
+
+    <div class="form-row">
+      <label>Moneda</label>
+      <select id="moneda">
+        <option value="PEN">PEN – Sol peruano</option>
+        <option value="USD">USD – Dólar estadounidense</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Concepto</label>
+      <textarea id="concepto" placeholder="Ej: Pago diario de amortización, depósito desde Intigriti…"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>Frecuencia de pago <span class="badge">Simulado</span></label>
+      <select id="frecuencia">
+        <option value="unico">Único</option>
+        <option value="diario">Diario</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensual">Mensual</option>
+      </select>
+    </div>
+
+    <button id="btnPreview">Revisar pago simulado</button>
+
+    <div id="preview" class="preview" style="display:none;"></div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h4>Consejos de seguridad</h4>
+    <ul>
+      <li>Revisa siempre el nombre del destinatario antes de confirmar un pago.</li>
+      <li>No compartas tus credenciales ni tus códigos de verificación.</li>
+      <li>Verifica que los pagos diarios a Binance o a cualquier otro servicio sean realmente intencionales.</li>
+      <li>Si ves un movimiento que no reconoces, detén el flujo de pagos y revisa la sección de <strong>Ayuda</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Pagos frecuentes</h4>
+    <p class="small">
+      En este panel se muestran ejemplos de pagos diarios de <strong>-500 PEN</strong> hacia Binance Cripto
+      y depósitos desde Intigriti Cibersecurity. Usa esta sección para simular cómo configurarías esos pagos.
+    </p>
+  </div>
+</section>
+
+</div>
+</main>
+
+<script>
+const btn = document.getElementById("btnPreview");
+const preview = document.getElementById("preview");
+
+btn.addEventListener("click", () => {
+  const destinatario = document.getElementById("destinatario").value.trim();
+  const monto = document.getElementById("monto").value.trim();
+  const moneda = document.getElementById("moneda").value;
+  const concepto = document.getElementById("concepto").value.trim() || "Sin concepto";
+  const frecuencia = document.getElementById("frecuencia").value;
+
+  if (!destinatario || !monto) {
+    alert("Completa al menos el destinatario y el monto para previsualizar el pago.");
+    return;
+  }
+
+  let freqLabel = "Pago único";
+  if (frecuencia === "diario") freqLabel = "Pago diario";
+  if (frecuencia === "semanal") freqLabel = "Pago semanal";
+  if (frecuencia === "mensual") freqLabel = "Pago mensual";
+
+  preview.style.display = "block";
+  preview.innerHTML = `
+    <strong>Previsualización del pago</strong>
+    <div><b>Destinatario:</b> ${destinatario}</div>
+    <div><b>Monto:</b> ${monto} ${moneda}</div>
+    <div><b>Tipo:</b> ${freqLabel}</div>
+    <div><b>Concepto:</b> ${concepto}</div>
+    <p class="small">
+      Esta es solo una simulación en tu panel DC PayPal. No se ejecuta ningún cargo real.
+    </p>
+  `;
+});
+</script>
+
+</body>
+</html>
 
