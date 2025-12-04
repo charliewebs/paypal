@@ -338,11 +338,11 @@
       <span>PayPal</span>
     </div>
     <nav>
-      <a href="#" class="active">Inicio</a>
-      <a href="#">Enviar</a>
-      <a href="#">Cartera</a>
-      <a href="#">Movimientos</a>
-      <a href="#">Ayuda</a>
+      <a href="index.html" class="active">Inicio</a>
+      <a href="enviar.html">Enviar</a>
+      <a href="cartera.html">Cartera</a>
+      <a href="movimientos.html">Movimientos</a>
+      <a href="ayuda.html">Ayuda</a>
     </nav>
     <div class="top-actions">
       <span>Diego Pedro Cueva Rovelo</span>
@@ -745,7 +745,7 @@
               </div>
               <span class="movement-amount positive">+140 USD</span>
             </div>
-            <!-- Aquí está el depósito grande que faltaba -->
+            <!-- Aquí está el depósito grande -->
             <div class="movement-item">
               <div class="movement-main">
                 <span class="movement-title">Binance Cripto</span>
@@ -768,23 +768,8 @@
 
       <!-- COLUMNA DERECHA -->
       <section>
+        <!-- Solo Buscar movimiento -->
         <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Accesos rápidos</div>
-              <div class="card-subtitle">Acciones frecuentes</div>
-            </div>
-          </div>
-          <div class="chips">
-            <button class="chip">Enviar dinero</button>
-            <button class="chip">Solicitar pago</button>
-            <button class="chip">Asociar tarjeta</button>
-            <button class="chip">Crear enlace de pago</button>
-            <button class="chip">Más opciones</button>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top: 18px;">
           <div class="card-header">
             <div class="card-title">Buscar movimiento</div>
           </div>
@@ -833,13 +818,16 @@
     </div>
     <div>© 2025 PayPal · Todos los derechos reservados.</div>
   </footer>
+
   <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-</script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
+
+
 
 
 
