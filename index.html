@@ -66,14 +66,18 @@ main { padding:24px 32px; }
 <body>
 
 <header>
-  <strong>DC PayPal</strong>
+  <strong style="display:flex;align-items:center;gap:8px;">
+    <img src="icon01.png" alt="DC PayPal" height="22">
+    DC PayPal
+  </strong>
+
   <nav>
-    <!-- AHORA SON LINKS REALES -->
     <a href="index.html" class="active">Inicio</a>
     <a href="enviar.html">Enviar</a>
     <a href="movimientos.html">Movimientos</a>
     <a href="ayuda.html">Ayuda</a>
   </nav>
+
   <span>Diego Pedro Cueva Rovelo</span>
 </header>
 
@@ -95,8 +99,16 @@ main { padding:24px 32px; }
 <section>
   <div class="card">
     <h4>Buscar movimiento</h4>
-    <!-- LE DAMOS ID PARA PODER USARLO EN JS -->
     <input id="searchInput" placeholder="Buscar por nombre…" />
+
+    <!-- RETIRAR -->
+    <div style="margin-top:18px;font-size:14px;">
+      <div style="margin-bottom:6px;font-weight:600;">Retirar:</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="icon02.png" alt="BCP" height="20">
+        <span>Cuenta Ahorros BCP **** **** **** **** 6443</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -124,18 +136,14 @@ function addMovement(title, meta, amount, type){
   movementsEl.appendChild(div);
 }
 
-const start = new Date(2024,9,10); // 10 oct
-const end   = new Date(2024,11,4); // 04 dic
+const start = new Date(2024,9,10);
+const end   = new Date(2024,11,4);
 
 for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
-
   const label = formatDate(d);
 
-  // 🔴 Binance gasto diario (ahora siempre -500 PEN)
-  const binanceAmount = "-500 PEN";
-  addMovement("Binance Cripto",`${label} · Pago completado`,binanceAmount,"negative");
+  addMovement("Binance Cripto",`${label} · Pago completado`,"-500 PEN","negative");
 
-  // 🔴 Intereses Binance
   if(d.getDate()===31 && d.getMonth()===9){
     addMovement("Binance Cripto","31 oct · Intereses Binance","-2,700 PEN","negative");
   }
@@ -143,18 +151,15 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("Binance Cripto","30 nov · Intereses Binance","-2,700 PEN","negative");
   }
 
-  // 🟢 Intigriti depósitos
   if(d > start){
-    let amount;
     const nov11 = new Date(2024,10,11);
-    amount = d < nov11
+    const amount = d < nov11
       ? Math.floor(120 + Math.random()*61)
       : Math.floor(298 + Math.random()*118);
 
     addMovement("Intigriti Cibersecurity",`${label} · Depósito`,`+${amount} PEN`,"positive");
   }
 
-  // 🟢 TD SYNNEX
   if(d.getDate()===15 && d.getMonth()===9){
     addMovement("TD SYNNEX Symantec","15 oct · Depósito extraordinario","+5,800 PEN","positive");
   }
@@ -162,45 +167,30 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("TD SYNNEX Symantec","15 nov · Depósito extraordinario","+5,800 PEN","positive");
   }
 
-  // 🔴 Amortización BCP 10 nov
   if(d.getDate()===10 && d.getMonth()===10){
     addMovement("BCP","10 nov · Amortización","-46,800 PEN","negative");
   }
 
-  // ✅ 03 dic – depósito Intigriti + amortización BCP + pendiente Binance
   if(d.getDate()===3 && d.getMonth()===11){
     addMovement("Intigriti Cibersecurity","03 dic · Depósito","+4,370 PEN","positive");
     addMovement("BCP","03 dic · Amortización","-4,370 PEN","negative");
     addMovement("Binance Cripto","03 dic · Pendiente de liberación","+346 PEN","pending");
   }
 
-  // 🟢 Depósito inicial Binance
   if(d.getTime()===start.getTime()){
     addMovement("Binance Cripto","10 oct · Depósito","+129,114 PEN","positive");
   }
 }
 
-// =====================
-// FILTRO DE BÚSQUEDA
-// =====================
 const searchInput = document.getElementById("searchInput");
-
 searchInput.addEventListener("input", () => {
   const term = searchInput.value.toLowerCase().trim();
-  const items = movementsEl.querySelectorAll(".movement-item");
-
-  items.forEach(item => {
+  document.querySelectorAll(".movement-item").forEach(item => {
     const title = item.querySelector("strong").textContent.toLowerCase();
-    // Si el término está vacío, mostramos todo
-    if (!term || title.includes(term)) {
-      item.style.display = "flex";
-    } else {
-      item.style.display = "none";
-    }
+    item.style.display = !term || title.includes(term) ? "flex" : "none";
   });
 });
 </script>
 
 </body>
 </html>
-
