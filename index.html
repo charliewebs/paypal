@@ -191,14 +191,55 @@ function addMovement(title, meta, amount, type){
   movementsEl.appendChild(div);
 }
 
-const start = new Date(2024,9,10);
-const end   = new Date(2024,11,4);
+/* ---------- RANDOM FIJO POR FECHA PARA INTIGRITI ---------- */
+function dateRandom(date, salt=""){
+  const iso = date.toISOString().slice(0,10) + salt;
+  let hash = 0;
+  for (let i = 0; i < iso.length; i++) {
+    hash = (hash * 31 + iso.charCodeAt(i)) >>> 0;
+  }
+  return (hash % 1000) / 1000; // 0–0.999
+}
+
+function getIntigritiAmount(d){
+  const dayOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  const range1Start = new Date(2024,9,11); // 11 oct
+  const range1End   = new Date(2024,9,30); // 30 oct
+  const range2Start = new Date(2024,9,31); // 31 oct
+  const range2End   = new Date(2024,11,4); // 04 dic
+
+  let min, max;
+
+  if (dayOnly >= range1Start && dayOnly <= range1End) {
+    // 11 oct – 30 oct: 50–80 USD
+    min = 50;
+    max = 80;
+  } else if (dayOnly >= range2Start && dayOnly <= range2End) {
+    // 31 oct – 04 dic: 150–180 USD
+    min = 150;
+    max = 180;
+  } else {
+    // Fallback (no debería usarse, pero por seguridad)
+    min = 150;
+    max = 180;
+  }
+
+  const r = dateRandom(dayOnly, "intigriti");
+  return Math.floor(min + r * (max - min + 1));
+}
+
+/* ---------- GENERACIÓN DE MOVIMIENTOS ---------- */
+const start = new Date(2024,9,10); // 10 oct
+const end   = new Date(2024,11,4); // 04 dic
 
 for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
   const label = formatDate(d);
 
+  // Binance gasto diario -500 PEN
   addMovement("Binance Cripto",`${label} · Pago completado`,"-500 PEN","negative");
 
+  // Intereses Binance
   if(d.getDate()===31 && d.getMonth()===9){
     addMovement("Binance Cripto","31 oct · Intereses Binance","-2,700 PEN","negative");
   }
@@ -206,13 +247,9 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("Binance Cripto","30 nov · Intereses Binance","-2,700 PEN","negative");
   }
 
+  // Intigriti depósitos (USD, random fijo por fecha)
   if(d > start){
-    const nov11 = new Date(2024,10,11);
-    const amount = d < nov11
-      ? Math.floor(120 + Math.random()*61)
-      : Math.floor(298 + Math.random()*118);
-
-    /* ✅ CAMBIO ÚNICO: USD en Intigriti */
+    const amount = getIntigritiAmount(d);
     addMovement(
       "Intigriti Cibersecurity",
       `${label} · Depósito`,
@@ -221,6 +258,7 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     );
   }
 
+  // TD SYNNEX
   if(d.getDate()===15 && d.getMonth()===9){
     addMovement("TD SYNNEX Symantec","15 oct · Depósito extraordinario","+5,800 PEN","positive");
   }
@@ -228,25 +266,31 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("TD SYNNEX Symantec","15 nov · Depósito extraordinario","+5,800 PEN","positive");
   }
 
+  // Amortización BCP 10 nov
   if(d.getDate()===10 && d.getMonth()===10){
     addMovement("BCP","10 nov · Amortización","-46,800 PEN","negative");
   }
 
+  // Paquete 03 dic
   if(d.getDate()===3 && d.getMonth()===11){
-    addMovement("Intigriti Cibersecurity","03 dic · Depósito","+4,370 USD","positive");
+    // Este se mantiene en PEN, monto grande
+    addMovement("Intigriti Cibersecurity","03 dic · Depósito","+4,370 PEN","positive");
     addMovement("BCP","03 dic · Amortización","-4,370 PEN","negative");
     addMovement("Binance Cripto","03 dic · Pendiente de liberación","+346 PEN","pending");
   }
 
+  // Depósito inicial Binance 10 oct
   if(d.getTime()===start.getTime()){
     addMovement("Binance Cripto","10 oct · Depósito","+129,114 PEN","positive");
   }
 }
 
+// ---- Movimientos anteriores al 10 oct ----
 addMovement("PortSwigger Ltd","01 oct · Pago completado","-1,700 PEN","negative");
 addMovement("HackerOne","01 oct · Depósito","+4,200 PEN","positive");
 addMovement("OSCP Security","15 sep · Pago completado","-8,200 PEN","negative");
 
+/* ---------- BUSCADOR ---------- */
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("input", () => {
   const term = searchInput.value.toLowerCase().trim();
