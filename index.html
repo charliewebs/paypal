@@ -68,10 +68,11 @@ main { padding:24px 32px; }
 <header>
   <strong>DC PayPal</strong>
   <nav>
-    <a class="active">Inicio</a>
-    <a>Enviar</a>
-    <a>Movimientos</a>
-    <a>Ayuda</a>
+    <!-- AHORA SON LINKS REALES -->
+    <a href="index.html" class="active">Inicio</a>
+    <a href="enviar.html">Enviar</a>
+    <a href="movimientos.html">Movimientos</a>
+    <a href="ayuda.html">Ayuda</a>
   </nav>
   <span>Diego Pedro Cueva Rovelo</span>
 </header>
@@ -94,7 +95,8 @@ main { padding:24px 32px; }
 <section>
   <div class="card">
     <h4>Buscar movimiento</h4>
-    <input placeholder="Buscar por nombre…" />
+    <!-- LE DAMOS ID PARA PODER USARLO EN JS -->
+    <input id="searchInput" placeholder="Buscar por nombre…" />
   </div>
 </section>
 
@@ -177,7 +179,28 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("Binance Cripto","10 oct · Depósito","+129,114 PEN","positive");
   }
 }
+
+// =====================
+// FILTRO DE BÚSQUEDA
+// =====================
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase().trim();
+  const items = movementsEl.querySelectorAll(".movement-item");
+
+  items.forEach(item => {
+    const title = item.querySelector("strong").textContent.toLowerCase();
+    // Si el término está vacío, mostramos todo
+    if (!term || title.includes(term)) {
+      item.style.display = "flex";
+    } else {
+      item.style.display = "none";
+    }
+  });
+});
 </script>
 
 </body>
 </html>
+
