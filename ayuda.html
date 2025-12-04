@@ -1,1 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DC PayPal – Ayuda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  background:#f5f6f8;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  margin:0;
+  color:#1f2933;
+}
+header {
+  background:#004a9f;
+  color:white;
+  padding:12px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav a {
+  color:#e5efff;
+  margin:0 12px;
+  text-decoration:none;
+  border-bottom:2px solid transparent;
+  padding-bottom:4px;
+}
+nav a.active { border-bottom-color:white; }
+main { padding:24px 32px; }
+.layout {
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+}
+.card {
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  border:1px solid #e5e7eb;
+  margin-bottom:18px;
+}
+h3, h4 {
+  margin-top:0;
+}
+.faq-item {
+  margin-bottom:14px;
+}
+.faq-item h4 {
+  font-size:15px;
+  margin:0 0 4px;
+}
+.faq-item p {
+  font-size:14px;
+  margin:0 0 6px;
+}
+.small {
+  font-size:12px;
+  color:#6b7280;
+}
+ul {
+  padding-left:18px;
+  font-size:14px;
+}
+.tag {
+  display:inline-block;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#e5f3ff;
+  color:#004a9f;
+  margin-left:6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>DC PayPal</strong>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="enviar.html">Enviar</a>
+    <a href="movimientos.html">Movimientos</a>
+    <a href="ayuda.html" class="active">Ayuda</a>
+  </nav>
+  <span>Diego Pedro Cueva Rovelo</span>
+</header>
+
+<main>
+<div class="layout">
+
+<section>
+  <div class="card">
+    <h3>Centro de ayuda DC PayPal</h3>
+    <p class="small">
+      Esta sección explica el significado de los movimientos que ves en tu panel
+      (pagos diarios a Binance Cripto, depósitos de Intigriti Cibersecurity, amortizaciones al BCP, etc.).
+      Todo el entorno es un ejemplo didáctico y no corresponde a una cuenta real.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="faq-item">
+      <h4>¿Qué significa “Pago completado” en Binance Cripto?</h4>
+      <p>
+        En tu panel se muestran cargos diarios de <strong>-500 PEN</strong> hacia <strong>Binance Cripto</strong>.
+        El estado <strong>“Pago completado”</strong> indica que el cargo ya fue descontado del saldo disponible.
+      </p>
+      <p class="small">
+        En un escenario real, este tipo de flujo se usaría para representar cuotas fijas diarias
+        o un plan de amortización hacia un tercero.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>¿Qué son los depósitos de Intigriti Cibersecurity?</h4>
+      <p>
+        Los ingresos de <strong>Intigriti Cibersecurity</strong> representan pagos por recompensas de bug bounty.
+        Se muestran como movimientos en verde con el texto <strong>“Depósito”</strong>.
+      </p>
+      <p class="small">
+        En este entorno, los montos son aleatorios dentro de un rango realista para simular
+        cómo impactan en tu balance frente a los egresos diarios.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>¿Qué es una “Amortización” al BCP?</h4>
+      <p>
+        Los cargos etiquetados como <strong>“BCP · Amortización”</strong> simbolizan pagos fuertes hacia un préstamo
+        bancario. Por ejemplo, el movimiento de <strong>-46,800 PEN</strong> el 10 de noviembre representa una
+        amortización de capital que reduce la deuda externa.
+      </p>
+      <p class="small">
+        El panel te permite visualizar cómo estos pagos grandes conviven con los pagos diarios menores.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>¿Qué significa “Pendiente de liberación”?<span class="tag">Binance Cripto</span></h4>
+      <p>
+        El movimiento de <strong>“Pendiente de liberación”</strong> se usa para representar fondos que aún no están
+        disponibles en tu saldo, por ejemplo, porque están retenidos temporalmente por el proveedor
+        (Binance, banco, pasarela de pago, etc.).
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>¿Puedo detener los pagos diarios en este panel?</h4>
+      <p>
+        No. Esta interfaz es únicamente una demostración visual. No existe una conexión real con Binance,
+        Intigriti ni el BCP. Sin embargo, el diseño imita lo que verías en una billetera digital moderna
+        para que puedas analizar cómodamente flujos de dinero complejos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h4>Buenas prácticas al revisar movimientos</h4>
+    <ul>
+      <li>Revisa el detalle (fecha + descripción) antes de asumir que un cargo es incorrecto.</li>
+      <li>Compara los pagos diarios con tus acuerdos de préstamo o términos de servicio.</li>
+      <li>Si un pago grande (como una amortización al BCP) no era esperado, revísalo en el historial.</li>
+      <li>Verifica que los depósitos desde Intigriti u otras plataformas coincidan con los reportes cerrados.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Contacto (simulado)</h4>
+    <p class="small">
+      Si se tratara de una cuenta real, podrías contactar al soporte mediante:
+    </p>
+    <ul>
+      <li>Chat en línea desde la misma plataforma.</li>
+      <li>Llamada a la línea de atención al cliente del banco o pasarela.</li>
+      <li>Ticket de soporte dentro del programa de bug bounty (para pagos de Intigriti, por ejemplo).</li>
+    </ul>
+    <p class="small">
+      En este caso, cualquier duda sobre el panel puedes resolverla editando el HTML/CSS/JS según tus necesidades.
+    </p>
+  </div>
+</section>
+
+</div>
+</main>
+
+</body>
+</html>
 
