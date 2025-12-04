@@ -465,6 +465,10 @@ function generateMovements(){
 
   /*
     RANGO: 10 oct 2025 – 04 dic 2025
+    PAGO POSITIVO (para el préstamo):
+    - Todos los -500 PEN de Binance Cripto (Pago completado)
+    - Todas las amortizaciones BCP
+    - Todos los intereses Binance (-2,700 PEN)
   */
 
   const start = new Date(2025, 9, 10);  // 10 oct
@@ -474,23 +478,23 @@ function generateMovements(){
     ensureMonthHeader(d);
     const label = dayLabel(d);
 
-    // Pagos diarios de Binance
-    addMovement("Binance Cripto", `${label} · Pago completado`, "S/ -500");
+    // Pagos diarios de Binance (-500)
+    addMovement("Binance Cripto", `${label} · Pago completado`, "S/. -500");
 
     // Intereses Binance
     if (d.getDate() === 31 && d.getMonth() === 9) {
-      addMovement("Binance Cripto", "31 oct · Intereses Binance", "S/ -2,700");
+      addMovement("Binance Cripto", "31 oct · Intereses Binance", "S/. -2,700");
     }
     if (d.getDate() === 30 && d.getMonth() === 10) {
-      addMovement("Binance Cripto", "30 nov · Intereses Binance", "S/ -2,700");
+      addMovement("Binance Cripto", "30 nov · Intereses Binance", "S/. -2,700");
     }
 
     // Amortizaciones BCP
     if (d.getDate() === 10 && d.getMonth() === 10) {
-      addMovement("BCP", "10 nov · Amortización", "S/ -46,800");
+      addMovement("BCP", "10 nov · Amortización", "S/. -46,800");
     }
     if (d.getDate() === 3 && d.getMonth() === 11) {
-      addMovement("BCP", "03 dic · Amortización", "S/ -4,370");
+      addMovement("BCP", "03 dic · Amortización", "S/. -4,370");
     }
   }
 }
