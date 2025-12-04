@@ -124,17 +124,16 @@ function addMovement(title, meta, amount, type){
 
 const start = new Date(2024,9,10); // 10 oct
 const end   = new Date(2024,11,4); // 04 dic
-const nov10 = new Date(2024,10,10); // 10 nov
 
 for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
 
   const label = formatDate(d);
 
-  // Binance gasto diario
-  const binanceAmount = d <= nov10 ? "-717 PEN" : "-500 PEN";
+  // 🔴 Binance gasto diario (ahora siempre -500 PEN)
+  const binanceAmount = "-500 PEN";
   addMovement("Binance Cripto",`${label} · Pago completado`,binanceAmount,"negative");
 
-  // Intereses Binance
+  // 🔴 Intereses Binance
   if(d.getDate()===31 && d.getMonth()===9){
     addMovement("Binance Cripto","31 oct · Intereses Binance","-2,700 PEN","negative");
   }
@@ -142,7 +141,7 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("Binance Cripto","30 nov · Intereses Binance","-2,700 PEN","negative");
   }
 
-  // Intigriti depósitos
+  // 🟢 Intigriti depósitos
   if(d > start){
     let amount;
     const nov11 = new Date(2024,10,11);
@@ -153,7 +152,7 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("Intigriti Cibersecurity",`${label} · Depósito`,`+${amount} PEN`,"positive");
   }
 
-  // TD SYNNEX
+  // 🟢 TD SYNNEX
   if(d.getDate()===15 && d.getMonth()===9){
     addMovement("TD SYNNEX Symantec","15 oct · Depósito extraordinario","+5,800 PEN","positive");
   }
@@ -161,19 +160,19 @@ for(let d=new Date(end); d>=start; d.setDate(d.getDate()-1)){
     addMovement("TD SYNNEX Symantec","15 nov · Depósito extraordinario","+5,800 PEN","positive");
   }
 
-  // Amortización BCP 10 nov
+  // 🔴 Amortización BCP 10 nov
   if(d.getDate()===10 && d.getMonth()===10){
     addMovement("BCP","10 nov · Amortización","-46,800 PEN","negative");
   }
 
-  // ✅ 03 dic – depósito Intigriti (antes pendiente)
+  // ✅ 03 dic – depósito Intigriti + amortización BCP + pendiente Binance
   if(d.getDate()===3 && d.getMonth()===11){
     addMovement("Intigriti Cibersecurity","03 dic · Depósito","+4,370 PEN","positive");
     addMovement("BCP","03 dic · Amortización","-4,370 PEN","negative");
     addMovement("Binance Cripto","03 dic · Pendiente de liberación","+346 PEN","pending");
   }
 
-  // Depósito inicial Binance
+  // 🟢 Depósito inicial Binance
   if(d.getTime()===start.getTime()){
     addMovement("Binance Cripto","10 oct · Depósito","+129,114 PEN","positive");
   }
