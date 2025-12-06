@@ -79,10 +79,12 @@ main { padding:24px 32px; }
   border-bottom:1px solid #e5e7eb;
   font-size:14px;
 }
+
 .movement-meta {
   font-size:12px;
   color:#6b7280;
 }
+
 .positive { color:#047857; font-weight:600; }
 .negative { color:#b91c1c; font-weight:600; }
 .pending  { color:#1d4ed8; font-weight:600; }
@@ -194,7 +196,8 @@ function addMovement(title, meta, amount, type){
 /* ---------- LISTA FIJA DE MOVIMIENTOS ---------- */
 /* Ordenados de más reciente a más antiguo */
 const movementsData = [
-  // Intigriti 2025 (nuevos y existentes)
+
+  /* --- INTIGRITI 2025 --- */
   {
     title: "Intigriti Cibersecurity",
     meta: "15 nov 2025 · Depósito",
@@ -220,7 +223,7 @@ const movementsData = [
     type: "positive"
   },
 
-  // TD SYNNEX 05 de cada mes 2025 (may–nov)
+  /* --- TD SYNNEX 05 MAY → NOV 2025 --- */
   {
     title: "TD SYNNEX Symantec",
     meta: "05 nov 2025 · Depósito extraordinario",
@@ -264,12 +267,12 @@ const movementsData = [
     type: "positive"
   },
 
-  // Depósitos Binance / directo 2024
+  /* --- MOVIMIENTOS 2024 --- */
   {
     title: "Binance Apalancamiento",
-    meta: "30 oct 2024 · Depósito",
-    amount: "+26,180 PEN",
-    type: "positive"
+    meta: "30 oct 2024 · Pago completado",
+    amount: "-26,180 PEN",
+    type: "negative"
   },
   {
     title: "Depósito directo",
@@ -277,8 +280,6 @@ const movementsData = [
     amount: "+1,280 PEN",
     type: "positive"
   },
-
-  // HackerOne actualizado
   {
     title: "HackerOne",
     meta: "30 oct 2024 · Depósito",
@@ -286,7 +287,7 @@ const movementsData = [
     type: "positive"
   },
 
-  // PortSwigger y OSCP (se mantienen)
+  /* --- MANTENIDOS --- */
   {
     title: "PortSwigger Ltd",
     meta: "01 oct 2024 · Pago completado",
