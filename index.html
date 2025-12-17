@@ -6,75 +6,152 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+/* ---------- BASE ---------- */
 body {
   background:#f5f6f8;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   margin:0;
   color:#1f2933;
 }
+
+/* ---------- HEADER ---------- */
 header {
   background:#004a9f;
   color:white;
-  padding:12px 32px;
+  padding:12px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
+  gap:10px;
 }
+
 header strong {
   display:flex;
   align-items:center;
   gap:8px;
+  font-weight:600;
 }
+
+nav {
+  display:flex;
+  gap:16px;
+}
+
 nav a {
   color:#e5efff;
-  margin:6px 12px;
   text-decoration:none;
   border-bottom:2px solid transparent;
   padding-bottom:4px;
 }
 nav a.active { border-bottom-color:white; }
-main { padding:24px 32px; }
+
+.user-name {
+  font-size:14px;
+  opacity:0.9;
+}
+
+/* ---------- MAIN ---------- */
+main { padding:20px; }
+
 .layout {
   display:grid;
   grid-template-columns:2fr 1fr;
   gap:24px;
 }
+
 .card {
   background:white;
-  border-radius:12px;
+  border-radius:14px;
   padding:20px;
   border:1px solid #e5e7eb;
   margin-bottom:18px;
 }
+
+/* ---------- MOVEMENTS ---------- */
 .movements {
   margin-top:12px;
   max-height:550px;
   overflow-y:auto;
 }
+
 .movement-item {
   display:flex;
   justify-content:space-between;
-  padding:10px 0;
+  align-items:center;
+  gap:12px;
+  padding:12px 0;
   border-bottom:1px solid #e5e7eb;
 }
-.movement-meta { font-size:12px;color:#6b7280; }
-.positive { color:#047857;font-weight:600; }
-.negative { color:#b91c1c;font-weight:600; }
+
+.movement-meta {
+  font-size:12px;
+  color:#6b7280;
+}
+
+.amount {
+  white-space:nowrap;
+  min-width:110px;
+  text-align:right;
+  font-weight:600;
+}
+
+.positive { color:#047857; }
+.negative { color:#b91c1c; }
+
+/* ---------- RESPONSIVE (MOBILE) ---------- */
+@media (max-width: 768px) {
+  header {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  nav {
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .layout {
+    grid-template-columns:1fr;
+  }
+
+  .card {
+    padding:18px;
+  }
+
+  .movement-item {
+    align-items:flex-start;
+  }
+
+  .amount {
+    font-size:14px;
+  }
+
+  .user-name {
+    width:100%;
+    text-align:left;
+    font-size:13px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <strong><img src="icon01.png" height="22"> DC PayPal</strong>
+  <strong>
+    <img src="icon01.png" height="22" alt="">
+    DC PayPal
+  </strong>
+
   <nav>
     <a class="active">Inicio</a>
     <a>Enviar</a>
     <a>Movimientos</a>
     <a>Ayuda</a>
   </nav>
-  <span>Diego Pedro Cueva Rovelo</span>
+
+  <span class="user-name">Diego Pedro Cueva Rovelo</span>
 </header>
 
 <main>
@@ -95,7 +172,7 @@ main { padding:24px 32px; }
 <section>
   <div class="card">
     <h4>Buscar movimiento</h4>
-    <input id="searchInput" placeholder="Buscar por nombre…">
+    <input id="searchInput" placeholder="Buscar por nombre…" style="width:100%;padding:8px;">
   </div>
 </section>
 
@@ -108,14 +185,16 @@ const movementsEl = document.getElementById("movements");
 function addMovement(t,m,a,c){
   movementsEl.innerHTML += `
   <div class="movement-item">
-    <div><strong>${t}</strong><div class="movement-meta">${m}</div></div>
-    <span class="${c}">${a}</span>
+    <div>
+      <strong>${t}</strong>
+      <div class="movement-meta">${m}</div>
+    </div>
+    <span class="amount ${c}">${a}</span>
   </div>`;
 }
 
-/* === ORDEN REAL: DIC → NOV → OCT → SEP === */
+/* === ORDEN REAL === */
 const movementsData = [
-
   { title:"Intigriti Cibersecurity", meta:"10 dic 2025 · Depósito", amount:"+2,400 PEN", type:"positive" },
   { title:"Binance Apalancamiento", meta:"06 dic 2025 · Pago completado", amount:"-43,385 PEN", type:"negative" },
   { title:"TD SYNNEX Symantec", meta:"05 dic 2025 · Depósito", amount:"+5,800 PEN", type:"positive" },
@@ -124,11 +203,10 @@ const movementsData = [
   { title:"Intigriti Cibersecurity", meta:"15 nov 2025 · Depósito", amount:"+630 PEN", type:"positive" },
   { title:"Intigriti Cibersecurity", meta:"10 nov 2025 · Depósito", amount:"+1,500 PEN", type:"positive" },
   { title:"Intigriti Cibersecurity", meta:"06 nov 2025 · Depósito", amount:"+330 PEN", type:"positive" },
-  { title:"TD SYNNEX Symantec", meta:"05 nov 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
 
+  { title:"TD SYNNEX Symantec", meta:"05 nov 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
   { title:"Binance Apalancamiento", meta:"30 oct 2025 · Pago completado", amount:"-26,180 PEN", type:"negative" },
   { title:"TD SYNNEX Symantec", meta:"05 oct 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
-
   { title:"TD SYNNEX Symantec", meta:"05 sep 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
 
   { title:"Depósito directo", meta:"29 oct 2024 · Depósito", amount:"+1,280 PEN", type:"positive" },
@@ -137,7 +215,9 @@ const movementsData = [
   { title:"OSCP Security", meta:"15 sep 2024 · Pago completado", amount:"-8,200 PEN", type:"negative" }
 ];
 
-movementsData.forEach(m=>addMovement(m.title,m.meta,m.amount,m.type));
+movementsData.forEach(m =>
+  addMovement(m.title,m.meta,m.amount,m.type)
+);
 </script>
 
 </body>
