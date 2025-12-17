@@ -6,15 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-/* ---------- BASE ---------- */
 body {
   background:#f5f6f8;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   margin:0;
   color:#1f2933;
 }
-
-/* ---------- HEADER ---------- */
 header {
   background:#004a9f;
   color:white;
@@ -23,21 +20,12 @@ header {
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
-  gap:12px;
 }
-
 header strong {
   display:flex;
   align-items:center;
   gap:8px;
 }
-
-nav {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
 nav a {
   color:#e5efff;
   margin:6px 12px;
@@ -46,16 +34,12 @@ nav a {
   padding-bottom:4px;
 }
 nav a.active { border-bottom-color:white; }
-
-/* ---------- MAIN ---------- */
 main { padding:24px 32px; }
-
 .layout {
   display:grid;
   grid-template-columns:2fr 1fr;
   gap:24px;
 }
-
 .card {
   background:white;
   border-radius:12px;
@@ -63,84 +47,33 @@ main { padding:24px 32px; }
   border:1px solid #e5e7eb;
   margin-bottom:18px;
 }
-
-/* ---------- MOVEMENTS ---------- */
 .movements {
   margin-top:12px;
   max-height:550px;
   overflow-y:auto;
 }
-
 .movement-item {
   display:flex;
   justify-content:space-between;
-  gap:12px;
   padding:10px 0;
   border-bottom:1px solid #e5e7eb;
-  font-size:14px;
 }
-
-.movement-meta {
-  font-size:12px;
-  color:#6b7280;
-}
-
-.positive { color:#047857; font-weight:600; }
-.negative { color:#b91c1c; font-weight:600; }
-.pending  { color:#1d4ed8; font-weight:600; }
-
-/* saldo negativo en rojo */
-.negative-balance {
-  color:#b91c1c;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 900px) {
-  header {
-    flex-direction:column;
-    align-items:flex-start;
-    padding:12px 16px;
-  }
-
-  nav {
-    justify-content:flex-start;
-  }
-
-  main {
-    padding:16px;
-  }
-
-  .layout {
-    grid-template-columns:1fr;
-  }
-
-  .movement-item {
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .movement-item span {
-    align-self:flex-end;
-  }
-}
+.movement-meta { font-size:12px;color:#6b7280; }
+.positive { color:#047857;font-weight:600; }
+.negative { color:#b91c1c;font-weight:600; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <strong>
-    <img src="icon01.png" alt="DC PayPal" height="22">
-    DC PayPal
-  </strong>
-
+  <strong><img src="icon01.png" height="22"> DC PayPal</strong>
   <nav>
-    <a href="index.html" class="active">Inicio</a>
-    <a href="enviar.html">Enviar</a>
-    <a href="movimientos.html">Movimientos</a>
-    <a href="ayuda.html">Ayuda</a>
+    <a class="active">Inicio</a>
+    <a>Enviar</a>
+    <a>Movimientos</a>
+    <a>Ayuda</a>
   </nav>
-
   <span>Diego Pedro Cueva Rovelo</span>
 </header>
 
@@ -162,15 +95,7 @@ main { padding:24px 32px; }
 <section>
   <div class="card">
     <h4>Buscar movimiento</h4>
-    <input id="searchInput" placeholder="Buscar por nombre…" />
-
-    <div style="margin-top:18px;font-size:14px;">
-      <div style="margin-bottom:6px;font-weight:600;">Retirar:</div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="icon02.png" alt="BCP" height="20">
-        <span>Cuenta Ahorros BCP **** **** **** **** 6443</span>
-      </div>
-    </div>
+    <input id="searchInput" placeholder="Buscar por nombre…">
   </div>
 </section>
 
@@ -180,166 +105,40 @@ main { padding:24px 32px; }
 <script>
 const movementsEl = document.getElementById("movements");
 
-function addMovement(title, meta, amount, type){
-  const div = document.createElement("div");
-  div.className = "movement-item";
-  div.innerHTML = `
-    <div>
-      <strong>${title}</strong>
-      <div class="movement-meta">${meta}</div>
-    </div>
-    <span class="${type}">${amount}</span>
-  `;
-  movementsEl.appendChild(div);
+function addMovement(t,m,a,c){
+  movementsEl.innerHTML += `
+  <div class="movement-item">
+    <div><strong>${t}</strong><div class="movement-meta">${m}</div></div>
+    <span class="${c}">${a}</span>
+  </div>`;
 }
 
-/* ---------- LISTA FIJA DE MOVIMIENTOS ---------- */
-/* Ordenados de más reciente a más antiguo */
+/* === ORDEN REAL: DIC → NOV → OCT → SEP === */
 const movementsData = [
 
-  /* --- BINANCE 2025 --- */
-  {
-    title: "Binance Apalancamiento",
-    meta: "30 oct 2025 · Pago completado",
-    amount: "-26,180 PEN",
-    type: "negative"
-  },
+  { title:"Intigriti Cibersecurity", meta:"10 dic 2025 · Depósito", amount:"+2,400 PEN", type:"positive" },
+  { title:"Binance Apalancamiento", meta:"06 dic 2025 · Pago completado", amount:"-43,385 PEN", type:"negative" },
+  { title:"TD SYNNEX Symantec", meta:"05 dic 2025 · Depósito", amount:"+5,800 PEN", type:"positive" },
 
-  /* --- INTIGRITI 2025 --- */
-  {
-    title: "Intigriti Cibersecurity",
-    meta: "10 dic 2025 · Depósito",
-    amount: "+2,400 PEN",
-    type: "positive"
-  },
-  {
-    title: "Intigriti Cibersecurity",
-    meta: "15 nov 2025 · Depósito",
-    amount: "+8,000 PEN",
-    type: "positive"
-  },
-  {
-    title: "Intigriti Cibersecurity",
-    meta: "15 nov 2025 · Depósito",
-    amount: "+630 PEN",
-    type: "positive"
-  },
-  {
-    title: "Intigriti Cibersecurity",
-    meta: "10 nov 2025 · Depósito",
-    amount: "+1,500 PEN",
-    type: "positive"
-  },
-  {
-    title: "Intigriti Cibersecurity",
-    meta: "06 nov 2025 · Depósito",
-    amount: "+330 PEN",
-    type: "positive"
-  },
+  { title:"Intigriti Cibersecurity", meta:"15 nov 2025 · Depósito", amount:"+8,000 PEN", type:"positive" },
+  { title:"Intigriti Cibersecurity", meta:"15 nov 2025 · Depósito", amount:"+630 PEN", type:"positive" },
+  { title:"Intigriti Cibersecurity", meta:"10 nov 2025 · Depósito", amount:"+1,500 PEN", type:"positive" },
+  { title:"Intigriti Cibersecurity", meta:"06 nov 2025 · Depósito", amount:"+330 PEN", type:"positive" },
+  { title:"TD SYNNEX Symantec", meta:"05 nov 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
 
-  /* --- BINANCE 2025 --- */
-  {
-    title: "Binance Apalancamiento",
-    meta: "06 dic 2025 · Pago completado",
-    amount: "-43,385 PEN",
-    type: "negative"
-  },
+  { title:"Binance Apalancamiento", meta:"30 oct 2025 · Pago completado", amount:"-26,180 PEN", type:"negative" },
+  { title:"TD SYNNEX Symantec", meta:"05 oct 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
 
-  /* --- TD SYNNEX 2025 --- */
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 dic 2025 · Depósito",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 nov 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 oct 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 sep 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 ago 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 jul 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 jun 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
-  {
-    title: "TD SYNNEX Symantec",
-    meta: "05 may 2025 · Depósito extraordinario",
-    amount: "+5,800 PEN",
-    type: "positive"
-  },
+  { title:"TD SYNNEX Symantec", meta:"05 sep 2025 · Depósito extraordinario", amount:"+5,800 PEN", type:"positive" },
 
-  /* --- MOVIMIENTOS 2024 --- */
-  {
-    title: "Depósito directo",
-    meta: "29 oct 2024 · Depósito",
-    amount: "+1,280 PEN",
-    type: "positive"
-  },
-  {
-    title: "HackerOne",
-    meta: "30 oct 2024 · Depósito",
-    amount: "+6,500 PEN",
-    type: "positive"
-  },
-
-  /* --- MANTENIDOS --- */
-  {
-    title: "PortSwigger Ltd",
-    meta: "01 oct 2024 · Pago completado",
-    amount: "-1,700 PEN",
-    type: "negative"
-  },
-  {
-    title: "OSCP Security",
-    meta: "15 sep 2024 · Pago completado",
-    amount: "-8,200 PEN",
-    type: "negative"
-  }
+  { title:"Depósito directo", meta:"29 oct 2024 · Depósito", amount:"+1,280 PEN", type:"positive" },
+  { title:"HackerOne", meta:"30 oct 2024 · Depósito", amount:"+6,500 PEN", type:"positive" },
+  { title:"PortSwigger Ltd", meta:"01 oct 2024 · Pago completado", amount:"-1,700 PEN", type:"negative" },
+  { title:"OSCP Security", meta:"15 sep 2024 · Pago completado", amount:"-8,200 PEN", type:"negative" }
 ];
 
-// Pintar todos los movimientos
-movementsData.forEach(m =>
-  addMovement(m.title, m.meta, m.amount, m.type)
-);
-
-/* ---------- BUSCADOR ---------- */
-const searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", () => {
-  const term = searchInput.value.toLowerCase().trim();
-  document.querySelectorAll(".movement-item").forEach(item => {
-    const title = item.querySelector("strong").textContent.toLowerCase();
-    item.style.display = !term || title.includes(term) ? "flex" : "none";
-  });
-});
+movementsData.forEach(m=>addMovement(m.title,m.meta,m.amount,m.type));
 </script>
 
 </body>
 </html>
-
